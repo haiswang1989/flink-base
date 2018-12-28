@@ -1,4 +1,4 @@
-package com.haiswang.flink.demo.xiaoxiang.transformation.join;
+package com.haiswang.flink.demo.xiaoxiang.transformation.joinandcogroup;
 
 public class Input1 {
     

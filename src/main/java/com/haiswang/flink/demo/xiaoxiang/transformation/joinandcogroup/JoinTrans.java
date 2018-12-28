@@ -1,4 +1,4 @@
-package com.haiswang.flink.demo.xiaoxiang.transformation.join;
+package com.haiswang.flink.demo.xiaoxiang.transformation.joinandcogroup;
 
 import org.apache.flink.api.common.functions.JoinFunction;
 import org.apache.flink.api.java.functions.KeySelector;
@@ -30,7 +30,25 @@ public class JoinTrans extends StreamPro {
         //input1Stream.print().setParallelism(1);
         //input2Stream.print().setParallelism(1);
         
-        
+        /*
+         * 1 ,i1
+         * 2 ,i2
+         * 3 ,i3
+         * 3 ,i4
+         * 
+         * 1 ,ii1
+         * 1 ,ii11
+         * 2 ,ii2
+         * 3 ,ii3
+         * 
+         * 1 ,i1 ,ii1
+         * 1 ,i1 ,ii11
+         * 2 ,i2 ,ii2
+         * 3 ,i3 ,ii3
+         * 3 ,i4 ,ii4
+         * 
+         * 
+         */
         // input1Stream join input2Stream on input1Stream.input1Uid=input2Stream.input2Uid
         input1Stream.join(input2Stream).where(new KeySelector<Input1, String>() {
             private static final long serialVersionUID = 1L;
@@ -49,6 +67,8 @@ public class JoinTrans extends StreamPro {
             private static final long serialVersionUID = 1L;
             @Override
             public Input1JoinInput2 join(Input1 input1, Input2 input2) throws Exception {
+                //input1的uid和input2的uid肯定是一致的
+                System.out.println(input1 + ":" + input2);
                 return new Input1JoinInput2(input1, input2);
             }
         }).print().setParallelism(1);
