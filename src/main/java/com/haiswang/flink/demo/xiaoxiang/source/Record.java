@@ -17,6 +17,8 @@ public class Record {
     private int attr; //属性
     
     private String data; //原始属性描述
+    
+    private boolean hasWatermarkMarker = false;
 
     public String getBizName() {
         return bizName;
@@ -56,5 +58,9 @@ public class Record {
 
     public void setData(String data) {
         this.data = data;
+    }
+    
+    public boolean hasWatermarkMarker() {
+        return hasWatermarkMarker;
     }
 }

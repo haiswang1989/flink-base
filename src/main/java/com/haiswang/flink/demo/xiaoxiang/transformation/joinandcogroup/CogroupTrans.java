@@ -47,7 +47,7 @@ public class CogroupTrans extends StreamPro {
                 //join和cogroup最主要的差别就是apply方法的入参
                 //join是JoinFunction的子类 ,join()方法入参是单个元素
                 //cogroup是CoGroupFunction的子类,coGroup()方法的入参数一个迭代器
-                //cogroup的扩展性比较强 ,join + group by + order by比较容易
+                //cogroup的扩展性比较强 ,join + group by + order by实现比较容易
                 System.out.println("input1 input2-------------------------");
                 Iterator<Input1> input1Iterator = input1.iterator();
                 while(input1Iterator.hasNext()) {
