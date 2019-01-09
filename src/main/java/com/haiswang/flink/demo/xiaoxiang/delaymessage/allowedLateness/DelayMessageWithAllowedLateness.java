@@ -1,4 +1,4 @@
-package com.haiswang.flink.demo.xiaoxiang.watermark.allowedLateness;
+package com.haiswang.flink.demo.xiaoxiang.delaymessage.allowedLateness;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple;
@@ -14,19 +14,26 @@ import com.haiswang.flink.demo.xiaoxiang.transformation.StreamPro;
 import com.haiswang.flink.demo.xiaoxiang.watermark.BoundedWaterMark;
 
 /**
- * window的触发之water mark
- * 通过water mark 触发window, 允许数据延迟
+ * 延迟数据的处理
  * 
  * 延缓window的清理时间
  * 
  * allowedLateness会再次触发窗口的计算,而之前触发的数据,会buffer起来,
  * 直到watermark超过end-of-window + allowedLateness()的时候,窗口才会被清理
  * 
+ * 优点：
+ * 1：在指定延迟的时间内的数据可以被处理
+ * 
+ * 缺点：
+ * 1：window会被多次触发,数据会出现重复(需要幂等支持)
+ * 2：不能保证数据100%不丢失,超过延迟时间的数据还是会失败
+ * 3：window清理会推后, 会存在多个window共存的情况, 对内存的压力会比较大
+ * 
  * <p>Description:</p>
  * @author hansen.wang
  * @date 2019年1月3日 上午10:41:40
  */
-public class TriggerWindowWithAllowedLateness extends StreamPro {
+public class DelayMessageWithAllowedLateness extends StreamPro {
     
     /**
      * //water mark的max length为60000ms
@@ -115,7 +122,7 @@ public class TriggerWindowWithAllowedLateness extends StreamPro {
     }
     
     public static void main(String[] args) throws Exception {
-        TriggerWindowWithAllowedLateness triggerWindow = new TriggerWindowWithAllowedLateness();
+        DelayMessageWithAllowedLateness triggerWindow = new DelayMessageWithAllowedLateness();
         triggerWindow.init();
         triggerWindow.run();
         triggerWindow.start("trigger window with allowed lateness.");

@@ -34,6 +34,9 @@ public class BoundedWaterMark implements AssignerWithPeriodicWatermarks<Tuple3<S
         return timestamp;
     }
     
+    /**
+     * currentMaxTimestamp - maxOutOfOrder 大于 window的大小就触发?
+     */
     @Override
     public Watermark getCurrentWatermark() {
         return new Watermark(currentMaxTimestamp - maxOutOfOrder);

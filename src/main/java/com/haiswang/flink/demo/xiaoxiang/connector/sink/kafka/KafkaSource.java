@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 /**
@@ -24,5 +25,8 @@ public class KafkaSource {
         
         DeserializationSchema<String> valueDeserializer = new SimpleStringSchema();
         FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(topic, valueDeserializer, props);
+        
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.addSource(consumer);
     }
 }
