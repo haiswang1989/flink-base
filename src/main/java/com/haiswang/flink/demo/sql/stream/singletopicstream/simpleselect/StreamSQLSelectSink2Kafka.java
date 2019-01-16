@@ -22,6 +22,8 @@ import com.haiswang.flink.demo.sql.stream.common.SingleFlinkKafkaPartitioner;
 import com.haiswang.flink.demo.sql.stream.common.SingleSerializationSchema;
 
 /**
+ * 单纯的select生成的流是
+ * append-only流
  * 
  * <p>Description:</p>
  * @author hansen.wang
